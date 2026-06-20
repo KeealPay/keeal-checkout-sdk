@@ -1,7 +1,10 @@
 /**
  * Stripe-style line item (matches POST /api/checkout/sessions body).
+ *
+ * Use `price_data` for one-off payments or ad-hoc subscription amounts.
+ * Use `price` with a catalog price id (`price_…`) for subscription checkout (Stripe parity).
  */
-export interface CheckoutLineItem {
+export type CheckoutLineItem = {
     price_data: {
         currency: string;
         product_data: {
@@ -12,7 +15,11 @@ export interface CheckoutLineItem {
         unit_amount: number;
     };
     quantity: number;
-}
+} | {
+    /** Catalog price public id — subscription mode only */
+    price: string;
+    quantity: number;
+};
 export interface CreateCheckoutSessionParams {
     line_items?: CheckoutLineItem[];
     /** `payment` (default) or `subscription` */

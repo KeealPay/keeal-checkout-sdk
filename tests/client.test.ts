@@ -71,6 +71,35 @@ describe("KeealCheckout.createSession", () => {
     expect(JSON.parse(recorded!.body!)).toEqual(params);
   });
 
+  it("POSTs subscription mode with line_items catalog price (Stripe parity)", async () => {
+    let recorded: RecordedRequest | undefined;
+
+    const checkout = new KeealCheckout({
+      apiKey: "keeal_sk_test",
+      baseUrl: "https://api.keeal.test/api",
+      fetchImpl: createMockFetch(
+        { body: { id: "cs_sub_price", url: "https://pay.keeal.test/cs_sub_price" } },
+        (req) => {
+          recorded = req;
+        }
+      ),
+    });
+
+    const params = {
+      mode: "subscription" as const,
+      line_items: [{ price: "price_catalog_abc", quantity: 1 }],
+      success_url: "https://shop.test/welcome",
+      cancel_url: "https://shop.test/pricing",
+    };
+
+    await checkout.createSession(params);
+
+    const body = JSON.parse(recorded!.body!);
+    expect(body.mode).toBe("subscription");
+    expect(body.line_items).toEqual([{ price: "price_catalog_abc", quantity: 1 }]);
+    expect(recorded?.headers["idempotency-key"]).toBeTruthy();
+  });
+
   it("POSTs subscription mode with subscription_data in the body", async () => {
     let recorded: RecordedRequest | undefined;
 
