@@ -1,0 +1,41 @@
+{
+  "name": "@keeal/checkout-sdk",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Keeal Checkout SDK — hosted checkout sessions, merchant APIs, and webhook verification",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "keeal",
+    "checkout",
+    "payments"
+  ],
+  "license": "MIT"
+}
