@@ -220,6 +220,19 @@ npm install
 npm run build
 npm run check-types
 npm run lint
+npm test
+```
+
+### End-to-end tests (optional)
+
+Against a local or staging API with a test secret key:
+
+```bash
+export KEEAL_E2E=1
+export KEEAL_API_KEY=keeal_sk_test_…
+export KEEAL_BASE_URL=http://localhost:8000/api
+export KEEAL_E2E_PRICE_ID=price_…   # optional subscription E2E
+npm run test:e2e
 ```
 
 ---
